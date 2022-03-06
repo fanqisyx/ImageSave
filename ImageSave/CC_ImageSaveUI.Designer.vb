@@ -42,44 +42,44 @@ Partial Class CC_ImageSaveUI
         Me.Button2 = New System.Windows.Forms.Button()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.CKBox_AutoDel_Enable = New System.Windows.Forms.CheckBox()
-        Me.GroupBox_AutoDel_SetRule = New System.Windows.Forms.GroupBox()
-        Me.CkBox_AutoDel_Disk = New System.Windows.Forms.CheckBox()
-        Me.CkBox_AutoDel_Time = New System.Windows.Forms.CheckBox()
-        Me.GroupBox_AutoDel_SetDisk = New System.Windows.Forms.GroupBox()
-        Me.GroupBox_AutoDel_SetTime = New System.Windows.Forms.GroupBox()
-        Me.ProgressBar_QueueSize = New System.Windows.Forms.ProgressBar()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.CB_disk_min = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.CB_del_remainingtime = New System.Windows.Forms.ComboBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.txtbox_todayDelImage = New System.Windows.Forms.TextBox()
+        Me.txtbox_todaySaveImage = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtbox_allImage = New System.Windows.Forms.TextBox()
+        Me.txtbox_allremainingimage = New System.Windows.Forms.TextBox()
+        Me.GroupBox_AutoDel_SetTime = New System.Windows.Forms.GroupBox()
+        Me.CB_del_remainingtime = New System.Windows.Forms.ComboBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.GroupBox_AutoDel_SetDisk = New System.Windows.Forms.GroupBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.CB_disk_min = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox_AutoDel_SetRule = New System.Windows.Forms.GroupBox()
+        Me.CkBox_AutoDel_Time = New System.Windows.Forms.CheckBox()
+        Me.CkBox_AutoDel_Disk = New System.Windows.Forms.CheckBox()
+        Me.CKBox_AutoDel_Enable = New System.Windows.Forms.CheckBox()
+        Me.ProgressBar_QueueSize = New System.Windows.Forms.ProgressBar()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
-        Me.GroupBox_AutoDel_SetRule.SuspendLayout()
-        Me.GroupBox_AutoDel_SetDisk.SuspendLayout()
-        Me.GroupBox_AutoDel_SetTime.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.GroupBox_AutoDel_SetTime.SuspendLayout()
+        Me.GroupBox_AutoDel_SetDisk.SuspendLayout()
+        Me.GroupBox_AutoDel_SetRule.SuspendLayout()
         Me.SuspendLayout()
         '
         'TxtBox_ImageSavePath
@@ -278,6 +278,7 @@ Partial Class CC_ImageSaveUI
         '
         'GroupBox5
         '
+        Me.GroupBox5.BackColor = System.Drawing.SystemColors.ControlLight
         Me.GroupBox5.Controls.Add(Me.GroupBox6)
         Me.GroupBox5.Controls.Add(Me.GroupBox_AutoDel_SetTime)
         Me.GroupBox5.Controls.Add(Me.GroupBox_AutoDel_SetDisk)
@@ -289,190 +290,6 @@ Partial Class CC_ImageSaveUI
         Me.GroupBox5.TabIndex = 9
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "图像自动删除规则"
-        '
-        'CKBox_AutoDel_Enable
-        '
-        Me.CKBox_AutoDel_Enable.AutoSize = True
-        Me.CKBox_AutoDel_Enable.Location = New System.Drawing.Point(7, 21)
-        Me.CKBox_AutoDel_Enable.Name = "CKBox_AutoDel_Enable"
-        Me.CKBox_AutoDel_Enable.Size = New System.Drawing.Size(144, 16)
-        Me.CKBox_AutoDel_Enable.TabIndex = 0
-        Me.CKBox_AutoDel_Enable.Text = "启用自动删除图片功能"
-        Me.CKBox_AutoDel_Enable.UseVisualStyleBackColor = True
-        '
-        'GroupBox_AutoDel_SetRule
-        '
-        Me.GroupBox_AutoDel_SetRule.Controls.Add(Me.CkBox_AutoDel_Time)
-        Me.GroupBox_AutoDel_SetRule.Controls.Add(Me.CkBox_AutoDel_Disk)
-        Me.GroupBox_AutoDel_SetRule.Location = New System.Drawing.Point(7, 44)
-        Me.GroupBox_AutoDel_SetRule.Name = "GroupBox_AutoDel_SetRule"
-        Me.GroupBox_AutoDel_SetRule.Size = New System.Drawing.Size(165, 65)
-        Me.GroupBox_AutoDel_SetRule.TabIndex = 1
-        Me.GroupBox_AutoDel_SetRule.TabStop = False
-        Me.GroupBox_AutoDel_SetRule.Text = "删除规则"
-        '
-        'CkBox_AutoDel_Disk
-        '
-        Me.CkBox_AutoDel_Disk.AutoSize = True
-        Me.CkBox_AutoDel_Disk.Checked = True
-        Me.CkBox_AutoDel_Disk.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CkBox_AutoDel_Disk.Enabled = False
-        Me.CkBox_AutoDel_Disk.Location = New System.Drawing.Point(11, 20)
-        Me.CkBox_AutoDel_Disk.Name = "CkBox_AutoDel_Disk"
-        Me.CkBox_AutoDel_Disk.Size = New System.Drawing.Size(144, 16)
-        Me.CkBox_AutoDel_Disk.TabIndex = 2
-        Me.CkBox_AutoDel_Disk.Text = "根据磁盘容量删除图片"
-        Me.CkBox_AutoDel_Disk.UseVisualStyleBackColor = True
-        '
-        'CkBox_AutoDel_Time
-        '
-        Me.CkBox_AutoDel_Time.AutoSize = True
-        Me.CkBox_AutoDel_Time.Location = New System.Drawing.Point(11, 42)
-        Me.CkBox_AutoDel_Time.Name = "CkBox_AutoDel_Time"
-        Me.CkBox_AutoDel_Time.Size = New System.Drawing.Size(144, 16)
-        Me.CkBox_AutoDel_Time.TabIndex = 3
-        Me.CkBox_AutoDel_Time.Text = "根据时间设定删除图片"
-        Me.CkBox_AutoDel_Time.UseVisualStyleBackColor = True
-        '
-        'GroupBox_AutoDel_SetDisk
-        '
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label5)
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label4)
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.CB_disk_min)
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label3)
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label2)
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label1)
-        Me.GroupBox_AutoDel_SetDisk.Location = New System.Drawing.Point(190, 21)
-        Me.GroupBox_AutoDel_SetDisk.Name = "GroupBox_AutoDel_SetDisk"
-        Me.GroupBox_AutoDel_SetDisk.Size = New System.Drawing.Size(181, 88)
-        Me.GroupBox_AutoDel_SetDisk.TabIndex = 2
-        Me.GroupBox_AutoDel_SetDisk.TabStop = False
-        Me.GroupBox_AutoDel_SetDisk.Text = "磁盘容量设定"
-        '
-        'GroupBox_AutoDel_SetTime
-        '
-        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.CB_del_remainingtime)
-        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.Label7)
-        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.TextBox1)
-        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.Label6)
-        Me.GroupBox_AutoDel_SetTime.Location = New System.Drawing.Point(389, 20)
-        Me.GroupBox_AutoDel_SetTime.Name = "GroupBox_AutoDel_SetTime"
-        Me.GroupBox_AutoDel_SetTime.Size = New System.Drawing.Size(181, 88)
-        Me.GroupBox_AutoDel_SetTime.TabIndex = 3
-        Me.GroupBox_AutoDel_SetTime.TabStop = False
-        Me.GroupBox_AutoDel_SetTime.Text = "时间设定"
-        '
-        'ProgressBar_QueueSize
-        '
-        Me.ProgressBar_QueueSize.BackColor = System.Drawing.Color.Lime
-        Me.ProgressBar_QueueSize.ForeColor = System.Drawing.Color.Red
-        Me.ProgressBar_QueueSize.Location = New System.Drawing.Point(76, 155)
-        Me.ProgressBar_QueueSize.Maximum = 15
-        Me.ProgressBar_QueueSize.Name = "ProgressBar_QueueSize"
-        Me.ProgressBar_QueueSize.Size = New System.Drawing.Size(317, 10)
-        Me.ProgressBar_QueueSize.Step = 1
-        Me.ProgressBar_QueueSize.TabIndex = 10
-        Me.ProgressBar_QueueSize.Value = 10
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(7, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(65, 12)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "磁盘总容量"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 43)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(77, 12)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "磁盘剩余容量"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(7, 64)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(77, 12)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "磁盘容量下限"
-        '
-        'CB_disk_min
-        '
-        Me.CB_disk_min.FormattingEnabled = True
-        Me.CB_disk_min.Items.AddRange(New Object() {"1GB", "5GB", "10GB", "20GB", "50GB", "100GB"})
-        Me.CB_disk_min.Location = New System.Drawing.Point(90, 60)
-        Me.CB_disk_min.Name = "CB_disk_min"
-        Me.CB_disk_min.Size = New System.Drawing.Size(74, 20)
-        Me.CB_disk_min.TabIndex = 3
-        Me.CB_disk_min.Text = "10GB"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(90, 22)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(35, 12)
-        Me.Label4.TabIndex = 4
-        Me.Label4.Text = "100GB"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(90, 43)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(29, 12)
-        Me.Label5.TabIndex = 5
-        Me.Label5.Text = "50GB"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 22)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(161, 12)
-        Me.Label6.TabIndex = 0
-        Me.Label6.Text = "档案中最早的图片的保存时间"
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Enabled = False
-        Me.TextBox1.Location = New System.Drawing.Point(9, 39)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(159, 21)
-        Me.TextBox1.TabIndex = 1
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(7, 64)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(77, 12)
-        Me.Label7.TabIndex = 2
-        Me.Label7.Text = "图像保存天数"
-        '
-        'CB_del_remainingtime
-        '
-        Me.CB_del_remainingtime.FormattingEnabled = True
-        Me.CB_del_remainingtime.Items.AddRange(New Object() {"6小时", "12小时", "1天", "3天", "5天", "7天", "15天", "30天", "60天", "90天", "180天", "365天", "2年", "5年"})
-        Me.CB_del_remainingtime.Location = New System.Drawing.Point(94, 60)
-        Me.CB_del_remainingtime.Name = "CB_del_remainingtime"
-        Me.CB_del_remainingtime.Size = New System.Drawing.Size(74, 20)
-        Me.CB_del_remainingtime.TabIndex = 6
-        Me.CB_del_remainingtime.Text = "30天"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(3, 153)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(65, 12)
-        Me.Label8.TabIndex = 11
-        Me.Label8.Text = "缓存 10/15"
         '
         'GroupBox6
         '
@@ -492,14 +309,14 @@ Partial Class CC_ImageSaveUI
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.TextBox6, 3, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.TextBox5, 2, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtbox_todayDelImage, 3, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtbox_todaySaveImage, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Label12, 3, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label11, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label10, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label9, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.TextBox2, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.TextBox3, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtbox_allImage, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtbox_allremainingimage, 1, 1)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -509,52 +326,25 @@ Partial Class CC_ImageSaveUI
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(541, 40)
         Me.TableLayoutPanel1.TabIndex = 0
         '
-        'Label9
+        'txtbox_todayDelImage
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(3, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(77, 12)
-        Me.Label9.TabIndex = 0
-        Me.Label9.Text = "历史存图总数"
+        Me.txtbox_todayDelImage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtbox_todayDelImage.Enabled = False
+        Me.txtbox_todayDelImage.Location = New System.Drawing.Point(327, 15)
+        Me.txtbox_todayDelImage.Name = "txtbox_todayDelImage"
+        Me.txtbox_todayDelImage.Size = New System.Drawing.Size(102, 21)
+        Me.txtbox_todayDelImage.TabIndex = 8
+        Me.txtbox_todayDelImage.Text = "0"
         '
-        'Label10
+        'txtbox_todaySaveImage
         '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(111, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(89, 12)
-        Me.Label10.TabIndex = 1
-        Me.Label10.Text = "记录中现存图数"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(219, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(77, 12)
-        Me.Label11.TabIndex = 2
-        Me.Label11.Text = "今日存图数量"
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox2.Enabled = False
-        Me.TextBox2.Location = New System.Drawing.Point(3, 15)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(102, 21)
-        Me.TextBox2.TabIndex = 3
-        Me.TextBox2.Text = "0"
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox3.Enabled = False
-        Me.TextBox3.Location = New System.Drawing.Point(111, 15)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(102, 21)
-        Me.TextBox3.TabIndex = 4
-        Me.TextBox3.Text = "0"
+        Me.txtbox_todaySaveImage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtbox_todaySaveImage.Enabled = False
+        Me.txtbox_todaySaveImage.Location = New System.Drawing.Point(219, 15)
+        Me.txtbox_todaySaveImage.Name = "txtbox_todaySaveImage"
+        Me.txtbox_todaySaveImage.Size = New System.Drawing.Size(102, 21)
+        Me.txtbox_todaySaveImage.TabIndex = 7
+        Me.txtbox_todaySaveImage.Text = "0"
         '
         'Label12
         '
@@ -565,25 +355,236 @@ Partial Class CC_ImageSaveUI
         Me.Label12.TabIndex = 5
         Me.Label12.Text = "今日删图数量"
         '
-        'TextBox5
+        'Label11
         '
-        Me.TextBox5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox5.Enabled = False
-        Me.TextBox5.Location = New System.Drawing.Point(219, 15)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(102, 21)
-        Me.TextBox5.TabIndex = 7
-        Me.TextBox5.Text = "0"
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(219, 0)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(77, 12)
+        Me.Label11.TabIndex = 2
+        Me.Label11.Text = "今日存图数量"
         '
-        'TextBox6
+        'Label10
         '
-        Me.TextBox6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox6.Enabled = False
-        Me.TextBox6.Location = New System.Drawing.Point(327, 15)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(102, 21)
-        Me.TextBox6.TabIndex = 8
-        Me.TextBox6.Text = "0"
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(111, 0)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(89, 12)
+        Me.Label10.TabIndex = 1
+        Me.Label10.Text = "记录中现存图数"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(3, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(77, 12)
+        Me.Label9.TabIndex = 0
+        Me.Label9.Text = "历史存图总数"
+        '
+        'txtbox_allImage
+        '
+        Me.txtbox_allImage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtbox_allImage.Enabled = False
+        Me.txtbox_allImage.Location = New System.Drawing.Point(3, 15)
+        Me.txtbox_allImage.Name = "txtbox_allImage"
+        Me.txtbox_allImage.Size = New System.Drawing.Size(102, 21)
+        Me.txtbox_allImage.TabIndex = 3
+        Me.txtbox_allImage.Text = "0"
+        '
+        'txtbox_allremainingimage
+        '
+        Me.txtbox_allremainingimage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtbox_allremainingimage.Enabled = False
+        Me.txtbox_allremainingimage.Location = New System.Drawing.Point(111, 15)
+        Me.txtbox_allremainingimage.Name = "txtbox_allremainingimage"
+        Me.txtbox_allremainingimage.Size = New System.Drawing.Size(102, 21)
+        Me.txtbox_allremainingimage.TabIndex = 4
+        Me.txtbox_allremainingimage.Text = "0"
+        '
+        'GroupBox_AutoDel_SetTime
+        '
+        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.CB_del_remainingtime)
+        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.Label7)
+        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.TextBox1)
+        Me.GroupBox_AutoDel_SetTime.Controls.Add(Me.Label6)
+        Me.GroupBox_AutoDel_SetTime.Location = New System.Drawing.Point(389, 20)
+        Me.GroupBox_AutoDel_SetTime.Name = "GroupBox_AutoDel_SetTime"
+        Me.GroupBox_AutoDel_SetTime.Size = New System.Drawing.Size(181, 88)
+        Me.GroupBox_AutoDel_SetTime.TabIndex = 3
+        Me.GroupBox_AutoDel_SetTime.TabStop = False
+        Me.GroupBox_AutoDel_SetTime.Text = "时间设定"
+        '
+        'CB_del_remainingtime
+        '
+        Me.CB_del_remainingtime.FormattingEnabled = True
+        Me.CB_del_remainingtime.Items.AddRange(New Object() {"6小时", "12小时", "1天", "3天", "5天", "7天", "15天", "30天", "60天", "90天", "180天", "365天", "2年", "5年"})
+        Me.CB_del_remainingtime.Location = New System.Drawing.Point(94, 60)
+        Me.CB_del_remainingtime.Name = "CB_del_remainingtime"
+        Me.CB_del_remainingtime.Size = New System.Drawing.Size(74, 20)
+        Me.CB_del_remainingtime.TabIndex = 6
+        Me.CB_del_remainingtime.Text = "30天"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(7, 64)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(77, 12)
+        Me.Label7.TabIndex = 2
+        Me.Label7.Text = "图像保存天数"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Enabled = False
+        Me.TextBox1.Location = New System.Drawing.Point(9, 39)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(159, 21)
+        Me.TextBox1.TabIndex = 1
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(7, 22)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(161, 12)
+        Me.Label6.TabIndex = 0
+        Me.Label6.Text = "档案中最早的图片的保存时间"
+        '
+        'GroupBox_AutoDel_SetDisk
+        '
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label5)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label4)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.CB_disk_min)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label3)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label2)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label1)
+        Me.GroupBox_AutoDel_SetDisk.Location = New System.Drawing.Point(190, 21)
+        Me.GroupBox_AutoDel_SetDisk.Name = "GroupBox_AutoDel_SetDisk"
+        Me.GroupBox_AutoDel_SetDisk.Size = New System.Drawing.Size(181, 88)
+        Me.GroupBox_AutoDel_SetDisk.TabIndex = 2
+        Me.GroupBox_AutoDel_SetDisk.TabStop = False
+        Me.GroupBox_AutoDel_SetDisk.Text = "磁盘容量设定"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(90, 43)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(29, 12)
+        Me.Label5.TabIndex = 5
+        Me.Label5.Text = "50GB"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(90, 22)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(35, 12)
+        Me.Label4.TabIndex = 4
+        Me.Label4.Text = "100GB"
+        '
+        'CB_disk_min
+        '
+        Me.CB_disk_min.FormattingEnabled = True
+        Me.CB_disk_min.Items.AddRange(New Object() {"1GB", "5GB", "10GB", "20GB", "50GB", "100GB"})
+        Me.CB_disk_min.Location = New System.Drawing.Point(90, 60)
+        Me.CB_disk_min.Name = "CB_disk_min"
+        Me.CB_disk_min.Size = New System.Drawing.Size(74, 20)
+        Me.CB_disk_min.TabIndex = 3
+        Me.CB_disk_min.Text = "10GB"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(7, 64)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(77, 12)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "磁盘容量下限"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(7, 43)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(77, 12)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "磁盘剩余容量"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(7, 22)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(65, 12)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "磁盘总容量"
+        '
+        'GroupBox_AutoDel_SetRule
+        '
+        Me.GroupBox_AutoDel_SetRule.Controls.Add(Me.CkBox_AutoDel_Time)
+        Me.GroupBox_AutoDel_SetRule.Controls.Add(Me.CkBox_AutoDel_Disk)
+        Me.GroupBox_AutoDel_SetRule.Location = New System.Drawing.Point(7, 44)
+        Me.GroupBox_AutoDel_SetRule.Name = "GroupBox_AutoDel_SetRule"
+        Me.GroupBox_AutoDel_SetRule.Size = New System.Drawing.Size(165, 65)
+        Me.GroupBox_AutoDel_SetRule.TabIndex = 1
+        Me.GroupBox_AutoDel_SetRule.TabStop = False
+        Me.GroupBox_AutoDel_SetRule.Text = "删除规则"
+        '
+        'CkBox_AutoDel_Time
+        '
+        Me.CkBox_AutoDel_Time.AutoSize = True
+        Me.CkBox_AutoDel_Time.Location = New System.Drawing.Point(11, 42)
+        Me.CkBox_AutoDel_Time.Name = "CkBox_AutoDel_Time"
+        Me.CkBox_AutoDel_Time.Size = New System.Drawing.Size(144, 16)
+        Me.CkBox_AutoDel_Time.TabIndex = 3
+        Me.CkBox_AutoDel_Time.Text = "根据时间设定删除图片"
+        Me.CkBox_AutoDel_Time.UseVisualStyleBackColor = True
+        '
+        'CkBox_AutoDel_Disk
+        '
+        Me.CkBox_AutoDel_Disk.AutoSize = True
+        Me.CkBox_AutoDel_Disk.Checked = True
+        Me.CkBox_AutoDel_Disk.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CkBox_AutoDel_Disk.Enabled = False
+        Me.CkBox_AutoDel_Disk.Location = New System.Drawing.Point(11, 20)
+        Me.CkBox_AutoDel_Disk.Name = "CkBox_AutoDel_Disk"
+        Me.CkBox_AutoDel_Disk.Size = New System.Drawing.Size(144, 16)
+        Me.CkBox_AutoDel_Disk.TabIndex = 2
+        Me.CkBox_AutoDel_Disk.Text = "根据磁盘容量删除图片"
+        Me.CkBox_AutoDel_Disk.UseVisualStyleBackColor = True
+        '
+        'CKBox_AutoDel_Enable
+        '
+        Me.CKBox_AutoDel_Enable.AutoSize = True
+        Me.CKBox_AutoDel_Enable.Location = New System.Drawing.Point(7, 21)
+        Me.CKBox_AutoDel_Enable.Name = "CKBox_AutoDel_Enable"
+        Me.CKBox_AutoDel_Enable.Size = New System.Drawing.Size(144, 16)
+        Me.CKBox_AutoDel_Enable.TabIndex = 0
+        Me.CKBox_AutoDel_Enable.Text = "启用自动删除图片功能"
+        Me.CKBox_AutoDel_Enable.UseVisualStyleBackColor = True
+        '
+        'ProgressBar_QueueSize
+        '
+        Me.ProgressBar_QueueSize.BackColor = System.Drawing.Color.Lime
+        Me.ProgressBar_QueueSize.ForeColor = System.Drawing.Color.Red
+        Me.ProgressBar_QueueSize.Location = New System.Drawing.Point(76, 155)
+        Me.ProgressBar_QueueSize.Maximum = 15
+        Me.ProgressBar_QueueSize.Name = "ProgressBar_QueueSize"
+        Me.ProgressBar_QueueSize.Size = New System.Drawing.Size(317, 10)
+        Me.ProgressBar_QueueSize.Step = 1
+        Me.ProgressBar_QueueSize.TabIndex = 10
+        Me.ProgressBar_QueueSize.Value = 10
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(3, 153)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(65, 12)
+        Me.Label8.TabIndex = 11
+        Me.Label8.Text = "缓存 10/15"
         '
         'CC_ImageSaveUI
         '
@@ -610,15 +611,15 @@ Partial Class CC_ImageSaveUI
         Me.GroupBox4.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
-        Me.GroupBox_AutoDel_SetRule.ResumeLayout(False)
-        Me.GroupBox_AutoDel_SetRule.PerformLayout()
-        Me.GroupBox_AutoDel_SetDisk.ResumeLayout(False)
-        Me.GroupBox_AutoDel_SetDisk.PerformLayout()
-        Me.GroupBox_AutoDel_SetTime.ResumeLayout(False)
-        Me.GroupBox_AutoDel_SetTime.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        Me.GroupBox_AutoDel_SetTime.ResumeLayout(False)
+        Me.GroupBox_AutoDel_SetTime.PerformLayout()
+        Me.GroupBox_AutoDel_SetDisk.ResumeLayout(False)
+        Me.GroupBox_AutoDel_SetDisk.PerformLayout()
+        Me.GroupBox_AutoDel_SetRule.ResumeLayout(False)
+        Me.GroupBox_AutoDel_SetRule.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -663,12 +664,12 @@ Partial Class CC_ImageSaveUI
     Friend WithEvents Label8 As Windows.Forms.Label
     Friend WithEvents GroupBox6 As Windows.Forms.GroupBox
     Friend WithEvents TableLayoutPanel1 As Windows.Forms.TableLayoutPanel
-    Friend WithEvents TextBox6 As Windows.Forms.TextBox
-    Friend WithEvents TextBox5 As Windows.Forms.TextBox
+    Friend WithEvents txtbox_todayDelImage As Windows.Forms.TextBox
+    Friend WithEvents txtbox_todaySaveImage As Windows.Forms.TextBox
     Friend WithEvents Label12 As Windows.Forms.Label
     Friend WithEvents Label11 As Windows.Forms.Label
     Friend WithEvents Label10 As Windows.Forms.Label
     Friend WithEvents Label9 As Windows.Forms.Label
-    Friend WithEvents TextBox2 As Windows.Forms.TextBox
-    Friend WithEvents TextBox3 As Windows.Forms.TextBox
+    Friend WithEvents txtbox_allImage As Windows.Forms.TextBox
+    Friend WithEvents txtbox_allremainingimage As Windows.Forms.TextBox
 End Class

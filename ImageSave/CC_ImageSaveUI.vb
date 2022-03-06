@@ -16,6 +16,7 @@ Public Class CC_ImageSaveUI
     Public AutoCreatDateFolder As Boolean
     Public AutoUseTimeForFileName As Boolean
 
+    '用于自动删除图片的变量定义
     Public del_IsneedDeleteImage As Boolean
     Public del_rule_time As Boolean = False
     Public del_rule_disk As Boolean = True
@@ -30,6 +31,9 @@ Public Class CC_ImageSaveUI
     Public image_today_del As Long
     Public del_time_holdtime_CBindex As Integer
     Public del_disk_setmin_CBindex As Integer
+
+    Delegate Sub ShowTextBoxDelegate(textbox As System.Windows.Forms.TextBox, str As String)
+
     Public Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         SaveIniParameter()
         SaveDelImageIniParameter()
@@ -50,6 +54,7 @@ Public Class CC_ImageSaveUI
         CK_UseMicroSoftWay.Visible = False
 
         GetIniParameter()
+        GetDelImageIniParameter()
     End Sub
     Private Sub GetDelImageIniParameter()
         del_IsneedDeleteImage = MyIni.Read(INISection, "del_IsneedDeleteImage", mytype.CC_Boolean)
@@ -64,15 +69,27 @@ Public Class CC_ImageSaveUI
         CkBox_AutoDel_Time.Checked = del_rule_time
         CB_del_remainingtime.SelectedIndex = del_time_holdtime_CBindex
         CB_disk_min.SelectedIndex = del_disk_setmin_CBindex
+
+
+    End Sub
+    Private Sub SetDelImageControlEnable(isneeddelimage As Boolean, timerule As Boolean)
+        If isneeddelimage = False Then
+            GroupBox_AutoDel_SetDisk.Enabled = False
+            GroupBox_AutoDel_SetRule.Enabled = False
+            GroupBox_AutoDel_SetTime.Enabled = False
+        Else
+            GroupBox_AutoDel_SetDisk.Enabled = True
+            GroupBox_AutoDel_SetRule.Enabled = True
+            If timerule = True Then
+                GroupBox_AutoDel_SetTime.Enabled = timerule
+            Else
+                GroupBox_AutoDel_SetTime.Enabled = False
+            End If
+        End If
     End Sub
     Private Sub SaveDelImageIniParameter()
-        del_IsneedDeleteImage = CKBox_AutoDel_Enable.Checked
-        del_rule_time = CkBox_AutoDel_Time.Checked
         del_rule_disk = True
-        del_disk_setmin = GetDiskMin()
-        del_time_holdtime = GetRemainTiem()
-        del_time_holdtime_CBindex = CB_del_remainingtime.SelectedIndex
-        del_disk_setmin_CBindex = CB_disk_min.SelectedIndex
+        GetDelImageControlValue()
 
         MyIni.Write(INISection, "del_IsneedDeleteImage", del_IsneedDeleteImage)
         MyIni.Write(INISection, "del_rule_time", del_rule_time)
@@ -234,5 +251,82 @@ Public Class CC_ImageSaveUI
         End Set
     End Property
 
+    Private Sub CKBox_AutoDel_Enable_CheckedChanged(sender As Object, e As EventArgs) Handles CKBox_AutoDel_Enable.CheckedChanged
+        GetDelImageControlValue()
+    End Sub
+
+    Private Sub CkBox_AutoDel_Time_CheckedChanged(sender As Object, e As EventArgs) Handles CkBox_AutoDel_Time.CheckedChanged
+        GetDelImageControlValue()
+    End Sub
+    Private Sub GetDelImageControlValue()
+        del_IsneedDeleteImage = CKBox_AutoDel_Enable.Checked
+        del_rule_time = CkBox_AutoDel_Time.Checked
+        del_disk_setmin = GetDiskMin()
+        del_time_holdtime = GetRemainTiem()
+        del_time_holdtime_CBindex = CB_del_remainingtime.SelectedIndex
+        del_disk_setmin_CBindex = CB_disk_min.SelectedIndex
+    End Sub
+
+    Private Sub CB_disk_min_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_disk_min.SelectedIndexChanged
+        GetDelImageControlValue()
+    End Sub
+
+    Private Sub CB_del_remainingtime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_del_remainingtime.SelectedIndexChanged
+        GetDelImageControlValue()
+    End Sub
+
+
+    Private Show_AllImage As Long
+    Public Property Allimage() As Long
+        Get
+            Return Show_AllImage
+        End Get
+        Set(ByVal value As Long)
+            Show_AllImage = value
+            DG_ShowText(txtbox_allImage, Show_AllImage)
+        End Set
+    End Property
+
+    Private Show_RemainingImage As Long
+    Public Property RemainingImage() As Long
+        Get
+            Return Show_RemainingImage
+        End Get
+        Set(ByVal value As Long)
+            Show_RemainingImage = value
+            DG_ShowText(txtbox_allremainingimage, Show_RemainingImage)
+        End Set
+    End Property
+
+
+    Private Show_TodaySaveImage As Long
+    Public Property TodaySaveImage() As Long
+        Get
+            Return Show_TodaySaveImage
+        End Get
+        Set(ByVal value As Long)
+            Show_TodaySaveImage = value
+            DG_ShowText(txtbox_todaySaveImage, Show_TodaySaveImage)
+        End Set
+    End Property
+
+    Private Show_TodayDelImage As Long
+    Public Property TodayDelImage() As String
+        Get
+            Return Show_TodayDelImage
+        End Get
+        Set(ByVal value As String)
+            Show_TodayDelImage = value
+            DG_ShowText(txtbox_todayDelImage, Show_TodayDelImage)
+        End Set
+    End Property
+    Private Sub DG_ShowText(textbox As System.Windows.Forms.TextBox, str As String) '//托管程序
+        If (textbox.InvokeRequired) Then
+            Dim d As New ShowTextBoxDelegate(AddressOf DG_ShowText) '//可选择为txt sub同样效果
+            textbox.Invoke(d, textbox, str)
+        Else
+            textbox.Text = str
+        End If
+    End Sub
 
 End Class
