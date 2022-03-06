@@ -36,8 +36,6 @@ Public Class CC_ImageSave
         End Set
     End Property
 
-
-
     ''' <summary>
     ''' 获取队列中所有图像总数
     ''' </summary>
@@ -78,7 +76,6 @@ Public Class CC_ImageSave
         End Get
     End Property
 
-
     Private TooFastSafeguard As Boolean = False
     ''' <summary>
     ''' 设置是否需要保护保存图片队列长度。
@@ -95,9 +92,6 @@ Public Class CC_ImageSave
             TooFastSafeguard = value
         End Set
     End Property
-
-
-
 
     Public Property SaveImageUI() As ChuangChi.CC_ImageSaveUI
         Get
@@ -221,7 +215,6 @@ Public Class CC_ImageSave
     '    Return svpth
     'End Function
 
-
     Private Function GetAllPath(Optional ByVal ReelNumber As String = " ", Optional ByVal Name As String = " ", Optional ByVal Format As String = "") As String
         Dim PathDir As String = mySaveImageUI.ImageSavePathEdit + "\" + "图片及数据" + "\" + ReelNumber + "\" + ReelNumber + "\"
         Dim Username As String
@@ -245,7 +238,6 @@ Public Class CC_ImageSave
 
         End Try
     End Sub
-
 
     Private Overloads Sub AddImageQueue(Name As String, image As Cognex.VisionPro.ICogImage)
         IsAddingImage = True
@@ -292,12 +284,10 @@ Public Class CC_ImageSave
         Return False
     End Function
 
-
     Public Sub Shutdown()
         IsNeedClose = True
         mythreading.Abort()
     End Sub
-
     Public Sub New()
         mythreading = New Threading.Thread(AddressOf SaveImageQueue)
         mythreading.IsBackground = True
@@ -305,4 +295,7 @@ Public Class CC_ImageSave
         mythreading.Start()
     End Sub
 
+End Class
+Public Class ImageManager
+    Private AppPath As String = My.Application.Info.DirectoryPath
 End Class
