@@ -33,6 +33,7 @@ Public Class CC_ImageSaveUI
     Public del_disk_setmin_CBindex As Integer
 
     Delegate Sub ShowTextBoxDelegate(textbox As System.Windows.Forms.TextBox, str As String)
+    Delegate Sub ShowLabelDelegate(label As System.Windows.Forms.Label, str As String)
 
     Public Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         SaveIniParameter()
@@ -100,7 +101,7 @@ Public Class CC_ImageSaveUI
         MyIni.Write(INISection, "del_disk_setmin_CBindex", del_disk_setmin_CBindex)
 
     End Sub
-    Private Function GetRemainTiem() As Long
+    Private Function GetRemainTime() As Long
         '0   6小时
         '1   12小时
         '2   1天
@@ -262,7 +263,7 @@ Public Class CC_ImageSaveUI
         del_IsneedDeleteImage = CKBox_AutoDel_Enable.Checked
         del_rule_time = CkBox_AutoDel_Time.Checked
         del_disk_setmin = GetDiskMin()
-        del_time_holdtime = GetRemainTiem()
+        del_time_holdtime = GetRemainTime()
         del_time_holdtime_CBindex = CB_del_remainingtime.SelectedIndex
         del_disk_setmin_CBindex = CB_disk_min.SelectedIndex
     End Sub
@@ -320,12 +321,55 @@ Public Class CC_ImageSaveUI
             DG_ShowText(txtbox_todayDelImage, Show_TodayDelImage)
         End Set
     End Property
+
+    Private Show_Disk_all As String
+    Public Property Disk_All() As String
+        Get
+            Return Show_Disk_all
+        End Get
+        Set(ByVal value As String)
+            Show_Disk_all = value
+            DG_ShowText(txtbox_Disk_All, value)
+        End Set
+    End Property
+
+    Private Show_Disk_Remaining As String
+    Public Property Disk_remaining() As String
+        Get
+            Return Show_Disk_Remaining
+        End Get
+        Set(ByVal value As String)
+            Show_Disk_Remaining = value
+            DG_ShowText(txtbox_disk_remaining, value)
+        End Set
+    End Property
+
+    Private ShowImageCache As Integer
+    Public Property ImageCache() As Integer
+        Get
+            Return ShowImageCache
+        End Get
+        Set(ByVal value As Integer)
+            ShowImageCache = value
+            DG_ShowLabel(Label8, String.Format("缓存 {0}/50", value.ToString()))
+        End Set
+    End Property
+
     Private Sub DG_ShowText(textbox As System.Windows.Forms.TextBox, str As String) '//托管程序
         If (textbox.InvokeRequired) Then
             Dim d As New ShowTextBoxDelegate(AddressOf DG_ShowText) '//可选择为txt sub同样效果
             textbox.Invoke(d, textbox, str)
         Else
             textbox.Text = str
+        End If
+    End Sub
+
+    Private Sub DG_ShowLabel(Label As System.Windows.Forms.Label, str As String) '//托管程序
+        If (Label.InvokeRequired) Then
+            Dim d As New ShowLabelDelegate(AddressOf DG_ShowLabel) '//可选择为txt sub同样效果
+            Label.Invoke(d, Label, str)
+        Else
+            Label.Text = str
         End If
     End Sub
 

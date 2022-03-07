@@ -3,6 +3,9 @@ Imports Cognex.VisionPro
 Imports System.Threading.Thread
 Imports ChuangChi.CC_ImageSaveUI
 Imports System.Drawing
+Imports System.Data.SQLite
+Imports System
+Imports ChuangChi.CC_SQLiteTool
 
 Public Class CC_ImageSave
     Private ImageQueue As New Queue
@@ -20,6 +23,8 @@ Public Class CC_ImageSave
     Private ErrorTimes As Integer = 0
     Private UseCognex As Boolean = True
     Private ImageLock As Object = New Object()
+
+    Private myImageManager As ImageManager
 
     ''' <summary>
     ''' 是否需要使用Cognex的dll保存ICogImage格式的图片
@@ -99,12 +104,15 @@ Public Class CC_ImageSave
         End Get
         Set(ByVal value As ChuangChi.CC_ImageSaveUI)
             mySaveImageUI = value
+            myImageManager.SaveImageUI = value
         End Set
     End Property
 
+
     Private Sub SaveImageQueue()
+        Dim runnum As Integer = 0
         While Not IsNeedClose
-            Sleep(1)
+            Sleep(100)
             Try
                 While ImageQueue.Count > 0 And Not IsAddingImage 'And (myImageFileForSave.Operator.IsSynchronized = True)
                     Dim NeedSaveImage As ICogImage
@@ -117,9 +125,11 @@ Public Class CC_ImageSave
                     myImageFileForSave.Operator.Open(NeedSaveImageName, CogImageFileModeConstants.Write)
                     Try
                         myImageFileForSave.Run()
+                        myImageManager.AddSaveImamge(NeedSaveImageName)
                     Catch ex As Exception
 
                     End Try
+                    myImageManager.ShowImageCache(ImageQueue.Count + ImageQueueBMP.Count)
                     Sleep(sleeptime)
                 End While
                 While ImageQueueBMP.Count > 0 And Not IsAddingImage
@@ -133,11 +143,19 @@ Public Class CC_ImageSave
                         ElseIf myNeedSaveBMPPath.EndsWith("jpg") Then
                             myNeedSaveBMP.Save(myNeedSaveBMPPath, Imaging.ImageFormat.Jpeg)
                         End If
+                        myImageManager.AddSaveImamge(myNeedSaveBMPPath)
                     Catch ex As Exception
 
                     End Try
+                    myImageManager.ShowImageCache(ImageQueue.Count + ImageQueueBMP.Count)
                     Sleep(sleeptime)
                 End While
+                runnum += 1
+                If runnum > 10 Then
+                    myImageManager.CheckNeedAndDelImage()
+                    runnum = 0
+                End If
+
             Catch ex As Exception
                 ErrorTimes += 1
             End Try
@@ -194,6 +212,7 @@ Public Class CC_ImageSave
         Catch ex As Exception
 
         End Try
+        myImageManager.ShowImageCache(ImageQueue.Count + ImageQueueBMP.Count)
         Return svpth
     End Function
 
@@ -293,9 +312,121 @@ Public Class CC_ImageSave
         mythreading.IsBackground = True
         mythreading.Priority = Threading.ThreadPriority.Lowest
         mythreading.Start()
+
+        myImageManager = New ImageManager
+        'Threading.Thread.Sleep(20000)
+
     End Sub
 
 End Class
 Public Class ImageManager
     Private AppPath As String = My.Application.Info.DirectoryPath
+    Private ImageDBPath As String
+    Private mySaveImageUI As New ChuangChi.CC_ImageSaveUI
+    Private conn As New SQLiteConnection
+    Private sqlcmd As New SQLiteCommand
+    Private sqlreader As SQLiteDataReader
+    Private ccsql As ChuangChi.CC_SQLiteTool = New CC_SQLiteTool
+    Private TableName As String = "Image"
+    Private OldDataTable As DataTable
+    Private LineCacheNum As Integer = 1000
+
+    Private DiskVolume As Long = 0
+    Private DiskRemainingVolume As Long = 0
+
+
+    Public Property SaveImageUI() As ChuangChi.CC_ImageSaveUI
+        Get
+            Return mySaveImageUI
+        End Get
+        Set(ByVal value As ChuangChi.CC_ImageSaveUI)
+            mySaveImageUI = value
+        End Set
+    End Property
+
+    Sub New()
+        ImageDBPath = IO.Directory.GetCurrentDirectory & "\Image.db"
+        ccsql.CreatDB(ImageDBPath)
+        ccsql.CreatTable(ImageDBPath, TableName, "时间 datetime,路径 text")
+        ccsql.ConnectDatabase(ImageDBPath)
+    End Sub
+
+    Sub ShowImageCache(num As Integer)
+        mySaveImageUI.ImageCache = num
+    End Sub
+    Sub AddSaveImamge(path As String)
+        Dim a As List(Of String) = New List(Of String)
+        a.Add(path)
+        a.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+        ccsql.InsertRow(TableName, a)
+    End Sub
+
+    Sub CheckNeedAndDelImage()
+        If OldDataTable.Rows.Count = 0 Then
+            GetNewTable()
+            CheckImageExists()
+        End If
+        Dim mydriver As System.IO.DriveInfo = New IO.DriveInfo(mySaveImageUI.ImageSavePathEdit.Substring(0, 1))
+        If mySaveImageUI.del_IsneedDeleteImage = True Then
+            If mySaveImageUI.del_rule_disk = True And OldDataTable.Rows.Count > 0 Then
+                GetDiskInfo(mydriver)
+                If DiskRemainingVolume <= mySaveImageUI.del_disk_setmin Then
+                    DeleteLastImage(20)
+                End If
+            End If
+            If mySaveImageUI.del_rule_time = True And OldDataTable.Rows.Count > 0 Then
+                Dim oldesttime As DateTime = GetOldestImageSaveTime()
+                Dim deltime As Long = DateDiff(DateInterval.Second, DateTime.Now, oldesttime)
+                If deltime > mySaveImageUI.del_time_holdtime Then
+                    DeleteLastImage(10)
+                End If
+            End If
+            If OldDataTable.Rows.Count = 0 Then
+                DelOldDBRow()
+            End If
+        End If
+    End Sub
+    Sub CheckImageExists()
+        Dim CheckRowNum As Integer = 0
+        While OldDataTable.Rows.Count > CheckRowNum
+            If IO.File.Exists(OldDataTable.Rows(CheckRowNum).Item("路径").ToString()) = False Then
+                OldDataTable.Rows(CheckRowNum).Delete()
+            Else
+                CheckRowNum += 1
+            End If
+        End While
+    End Sub
+
+    Sub DeleteLastImage(num As Integer)
+        If num > OldDataTable.Rows.Count Then num = OldDataTable.Rows.Count
+        For index = num - 1 To 0 Step -1
+            DeleteImage(OldDataTable.Rows(index).Item("路径").ToString())
+            OldDataTable.Rows(index).Delete()
+        Next
+    End Sub
+    Function DeleteImage(path As String) As Integer
+        Try
+            If IO.File.Exists(path) Then IO.File.Delete(path)
+            Return 1
+        Catch ex As Exception
+            Return -1
+        End Try
+    End Function
+    Function GetOldestImageSaveTime() As DateTime
+        Return CType(OldDataTable.Rows(0).Item("时间"), DateTime)
+    End Function
+    Sub GetDiskInfo(driver As System.IO.DriveInfo)
+        DiskVolume = driver.TotalSize
+        mySaveImageUI.Disk_All = String.Format("{0:2}GB", DiskVolume / (1024 * 1024 * 1024))
+        DiskRemainingVolume = driver.AvailableFreeSpace
+        mySaveImageUI.Disk_remaining = String.Format("{0:2}GB", DiskRemainingVolume / (1024 * 1024 * 1024))
+    End Sub
+
+    Sub DelOldDBRow()
+        ccsql.DeleteFirstFewLines(TableName, LineCacheNum)
+    End Sub
+
+    Sub GetNewTable()
+        OldDataTable = ccsql.GetFirstFewLines(TableName, LineCacheNum)
+    End Sub
 End Class

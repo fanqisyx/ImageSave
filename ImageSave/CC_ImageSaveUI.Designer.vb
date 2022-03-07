@@ -58,8 +58,6 @@ Partial Class CC_ImageSaveUI
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox_AutoDel_SetDisk = New System.Windows.Forms.GroupBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.CB_disk_min = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -70,6 +68,8 @@ Partial Class CC_ImageSaveUI
         Me.CKBox_AutoDel_Enable = New System.Windows.Forms.CheckBox()
         Me.ProgressBar_QueueSize = New System.Windows.Forms.ProgressBar()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtbox_Disk_All = New System.Windows.Forms.TextBox()
+        Me.txtbox_disk_remaining = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -453,8 +453,8 @@ Partial Class CC_ImageSaveUI
         '
         'GroupBox_AutoDel_SetDisk
         '
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label5)
-        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label4)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.txtbox_disk_remaining)
+        Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.txtbox_Disk_All)
         Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.CB_disk_min)
         Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label3)
         Me.GroupBox_AutoDel_SetDisk.Controls.Add(Me.Label2)
@@ -465,24 +465,6 @@ Partial Class CC_ImageSaveUI
         Me.GroupBox_AutoDel_SetDisk.TabIndex = 2
         Me.GroupBox_AutoDel_SetDisk.TabStop = False
         Me.GroupBox_AutoDel_SetDisk.Text = "磁盘容量设定"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(90, 43)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(29, 12)
-        Me.Label5.TabIndex = 5
-        Me.Label5.Text = "50GB"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(90, 22)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(35, 12)
-        Me.Label4.TabIndex = 4
-        Me.Label4.Text = "100GB"
         '
         'CB_disk_min
         '
@@ -570,7 +552,7 @@ Partial Class CC_ImageSaveUI
         Me.ProgressBar_QueueSize.BackColor = System.Drawing.Color.Lime
         Me.ProgressBar_QueueSize.ForeColor = System.Drawing.Color.Red
         Me.ProgressBar_QueueSize.Location = New System.Drawing.Point(76, 155)
-        Me.ProgressBar_QueueSize.Maximum = 15
+        Me.ProgressBar_QueueSize.Maximum = 20
         Me.ProgressBar_QueueSize.Name = "ProgressBar_QueueSize"
         Me.ProgressBar_QueueSize.Size = New System.Drawing.Size(317, 10)
         Me.ProgressBar_QueueSize.Step = 1
@@ -584,7 +566,23 @@ Partial Class CC_ImageSaveUI
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(65, 12)
         Me.Label8.TabIndex = 11
-        Me.Label8.Text = "缓存 10/15"
+        Me.Label8.Text = "缓存 10/20"
+        '
+        'txtbox_Disk_All
+        '
+        Me.txtbox_Disk_All.Enabled = False
+        Me.txtbox_Disk_All.Location = New System.Drawing.Point(90, 18)
+        Me.txtbox_Disk_All.Name = "txtbox_Disk_All"
+        Me.txtbox_Disk_All.Size = New System.Drawing.Size(74, 21)
+        Me.txtbox_Disk_All.TabIndex = 4
+        '
+        'txtbox_disk_remaining
+        '
+        Me.txtbox_disk_remaining.Enabled = False
+        Me.txtbox_disk_remaining.Location = New System.Drawing.Point(90, 39)
+        Me.txtbox_disk_remaining.Name = "txtbox_disk_remaining"
+        Me.txtbox_disk_remaining.Size = New System.Drawing.Size(74, 21)
+        Me.txtbox_disk_remaining.TabIndex = 5
         '
         'CC_ImageSaveUI
         '
@@ -650,8 +648,6 @@ Partial Class CC_ImageSaveUI
     Friend WithEvents TextBox1 As Windows.Forms.TextBox
     Friend WithEvents Label6 As Windows.Forms.Label
     Friend WithEvents GroupBox_AutoDel_SetDisk As Windows.Forms.GroupBox
-    Friend WithEvents Label5 As Windows.Forms.Label
-    Friend WithEvents Label4 As Windows.Forms.Label
     Friend WithEvents CB_disk_min As Windows.Forms.ComboBox
     Friend WithEvents Label3 As Windows.Forms.Label
     Friend WithEvents Label2 As Windows.Forms.Label
@@ -672,4 +668,6 @@ Partial Class CC_ImageSaveUI
     Friend WithEvents Label9 As Windows.Forms.Label
     Friend WithEvents txtbox_allImage As Windows.Forms.TextBox
     Friend WithEvents txtbox_allremainingimage As Windows.Forms.TextBox
+    Friend WithEvents txtbox_disk_remaining As Windows.Forms.TextBox
+    Friend WithEvents txtbox_Disk_All As Windows.Forms.TextBox
 End Class
