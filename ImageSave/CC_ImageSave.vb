@@ -19,7 +19,7 @@ Public Class CC_ImageSave
     Private mySaveImageUI As New ChuangChi.CC_ImageSaveUI
     Private myNeedSaveBMP As System.Drawing.Bitmap
     Private myNeedSaveBMPPath As String
-    Private sleeptime As Integer = 15
+    Private sleeptime As Integer = 1
     Private ErrorTimes As Integer = 0
     Private UseCognex As Boolean = True
     Private ImageLock As Object = New Object()
@@ -112,7 +112,7 @@ Public Class CC_ImageSave
     Private Sub SaveImageQueue()
         Dim runnum As Integer = 0
         While Not IsNeedClose
-            Sleep(100)
+            Sleep(10)
             Try
                 While ImageQueue.Count > 0 And Not IsAddingImage 'And (myImageFileForSave.Operator.IsSynchronized = True)
                     Dim NeedSaveImage As ICogImage
@@ -131,6 +131,8 @@ Public Class CC_ImageSave
                     End Try
                     myImageManager.ShowImageCache(ImageQueue.Count + ImageQueueBMP.Count)
                     Sleep(sleeptime)
+                    runnum += 1
+                    myImageManager.TodaySaveTimes += 1
                 End While
                 While ImageQueueBMP.Count > 0 And Not IsAddingImage
                     SyncLock ImageLock
@@ -149,9 +151,11 @@ Public Class CC_ImageSave
                     End Try
                     myImageManager.ShowImageCache(ImageQueue.Count + ImageQueueBMP.Count)
                     Sleep(sleeptime)
+                    runnum += 1
+                    myImageManager.TodaySaveTimes += 1
                 End While
-                runnum += 1
-                If runnum > 10 Then
+
+                If runnum > 0 Then
                     myImageManager.CheckNeedAndDelImage()
                     runnum = 0
                 End If
@@ -322,18 +326,25 @@ End Class
 Public Class ImageManager
     Private AppPath As String = My.Application.Info.DirectoryPath
     Private ImageDBPath As String
-    Private mySaveImageUI As New ChuangChi.CC_ImageSaveUI
+    Private mySaveImageUI As ChuangChi.CC_ImageSaveUI
     Private conn As New SQLiteConnection
     Private sqlcmd As New SQLiteCommand
     Private sqlreader As SQLiteDataReader
     Private ccsql As ChuangChi.CC_SQLiteTool = New CC_SQLiteTool
     Private TableName As String = "Image"
-    Private OldDataTable As DataTable
+    Private OldDataTable As DataTable = New DataTable
     Private LineCacheNum As Integer = 1000
+    Private LastRealCacheNum As Integer = 0
 
     Private DiskVolume As Long = 0
     Private DiskRemainingVolume As Long = 0
+    Private IsCouldWork As Boolean = False
+    Public TodaySaveTimes As Long = 0
+    Public TodayDelTimes As Long = 0
+    Private TableLineNum As Long = 0
 
+    Private oldesttime As DateTime
+    Private deltime As Long
 
     Public Property SaveImageUI() As ChuangChi.CC_ImageSaveUI
         Get
@@ -341,6 +352,7 @@ Public Class ImageManager
         End Get
         Set(ByVal value As ChuangChi.CC_ImageSaveUI)
             mySaveImageUI = value
+            IsCouldWork = True
         End Set
     End Property
 
@@ -356,40 +368,81 @@ Public Class ImageManager
     End Sub
     Sub AddSaveImamge(path As String)
         Dim a As List(Of String) = New List(Of String)
-        a.Add(path)
         a.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+        a.Add(path)
         ccsql.InsertRow(TableName, a)
     End Sub
 
     Sub CheckNeedAndDelImage()
-        If OldDataTable.Rows.Count = 0 Then
-            GetNewTable()
-            CheckImageExists()
-        End If
-        Dim mydriver As System.IO.DriveInfo = New IO.DriveInfo(mySaveImageUI.ImageSavePathEdit.Substring(0, 1))
-        If mySaveImageUI.del_IsneedDeleteImage = True Then
-            If mySaveImageUI.del_rule_disk = True And OldDataTable.Rows.Count > 0 Then
-                GetDiskInfo(mydriver)
-                If DiskRemainingVolume <= mySaveImageUI.del_disk_setmin Then
-                    DeleteLastImage(20)
-                End If
+        Try
+            If IsCouldWork = False Then
+                Return
             End If
-            If mySaveImageUI.del_rule_time = True And OldDataTable.Rows.Count > 0 Then
-                Dim oldesttime As DateTime = GetOldestImageSaveTime()
-                Dim deltime As Long = DateDiff(DateInterval.Second, DateTime.Now, oldesttime)
-                If deltime > mySaveImageUI.del_time_holdtime Then
-                    DeleteLastImage(10)
-                End If
-            End If
+            mySaveImageUI.TableLineNum = OldDataTable.Rows.Count
             If OldDataTable.Rows.Count = 0 Then
-                DelOldDBRow()
+                GetNewTable()
+                CheckImageExists()
+                mySaveImageUI.TableLineNum = OldDataTable.Rows.Count
             End If
-        End If
+            Dim mypath As String
+
+            mypath = mySaveImageUI.ImageSavePathEdit.Substring(0, 1)
+
+
+            Dim mydriver As System.IO.DriveInfo = New IO.DriveInfo(mypath)
+            If mySaveImageUI.del_IsneedDeleteImage = True Then
+                If mySaveImageUI.del_rule_disk = True And OldDataTable.Rows.Count > 0 Then
+                    GetDiskInfo(mydriver)
+                    If DiskRemainingVolume <= mySaveImageUI.del_disk_setmin Then
+                        DeleteLastImage(20)
+                    End If
+                End If
+                If mySaveImageUI.del_rule_time = True And OldDataTable.Rows.Count > 0 Then
+                    oldesttime = GetOldestImageSaveTime()
+                    mySaveImageUI.del_time_oldest = oldesttime
+
+                    deltime = DateDiff(DateInterval.Second, oldesttime, DateTime.Now)
+
+                    If deltime > mySaveImageUI.del_time_holdtime Then
+                        Dim picnum As Integer = GetNeedDelImageNumbyTime()
+                        DeleteLastImage(picnum)
+                    End If
+                End If
+                If OldDataTable.Rows.Count = 0 Then
+                    DelOldDBRow()
+                End If
+            End If
+            If mySaveImageUI.TodayDelImage <> TodayDelTimes Then mySaveImageUI.TodayDelImage = TodayDelTimes
+            If mySaveImageUI.TodaySaveImage <> TodaySaveTimes Then mySaveImageUI.TodaySaveImage = TodaySaveTimes
+            TableLineNum = ccsql.GetTableLineNum(TableName)
+            If mySaveImageUI.RemainingImage <> TableLineNum Then mySaveImageUI.RemainingImage = TableLineNum
+            If mySaveImageUI.TableLineNum <> OldDataTable.Rows.Count Then mySaveImageUI.TableLineNum = OldDataTable.Rows.Count
+        Catch ex As Exception
+
+        End Try
     End Sub
+
+    Private Function GetNeedDelImageNumbyTime() As Integer
+        Dim thistime As DateTime = DateTime.Now
+        Dim deltatime As Long
+        Dim linetime As DateTime
+        Dim outtimepicnum As Integer = 0
+        For index = 0 To OldDataTable.Rows.Count - 1
+            linetime = GetOldestImageSaveTime(index)
+            deltatime = DateDiff(DateInterval.Second, linetime, thistime)
+            If deltatime > mySaveImageUI.del_time_holdtime Then
+                outtimepicnum += 1
+            Else
+                Exit For
+            End If
+        Next
+        Return outtimepicnum
+    End Function
     Sub CheckImageExists()
         Dim CheckRowNum As Integer = 0
         While OldDataTable.Rows.Count > CheckRowNum
-            If IO.File.Exists(OldDataTable.Rows(CheckRowNum).Item("路径").ToString()) = False Then
+            Dim imagepath As String = OldDataTable.Rows(CheckRowNum).Item("路径").ToString()
+            If IO.File.Exists(imagepath) = False Then
                 OldDataTable.Rows(CheckRowNum).Delete()
             Else
                 CheckRowNum += 1
@@ -402,6 +455,7 @@ Public Class ImageManager
         For index = num - 1 To 0 Step -1
             DeleteImage(OldDataTable.Rows(index).Item("路径").ToString())
             OldDataTable.Rows(index).Delete()
+            TodayDelTimes += 1
         Next
     End Sub
     Function DeleteImage(path As String) As Integer
@@ -412,21 +466,22 @@ Public Class ImageManager
             Return -1
         End Try
     End Function
-    Function GetOldestImageSaveTime() As DateTime
-        Return CType(OldDataTable.Rows(0).Item("时间"), DateTime)
+    Function GetOldestImageSaveTime(Optional index As Integer = 0) As DateTime
+        Return Convert.ToDateTime(OldDataTable.Rows(index).Item("时间"))
     End Function
     Sub GetDiskInfo(driver As System.IO.DriveInfo)
         DiskVolume = driver.TotalSize
-        mySaveImageUI.Disk_All = String.Format("{0:2}GB", DiskVolume / (1024 * 1024 * 1024))
+        mySaveImageUI.Disk_All = DiskVolume
         DiskRemainingVolume = driver.AvailableFreeSpace
-        mySaveImageUI.Disk_remaining = String.Format("{0:2}GB", DiskRemainingVolume / (1024 * 1024 * 1024))
+        mySaveImageUI.Disk_remaining = DiskRemainingVolume
     End Sub
 
     Sub DelOldDBRow()
-        ccsql.DeleteFirstFewLines(TableName, LineCacheNum)
+        ccsql.DeleteFirstFewLines(TableName, LastRealCacheNum)
     End Sub
 
     Sub GetNewTable()
         OldDataTable = ccsql.GetFirstFewLines(TableName, LineCacheNum)
+        LastRealCacheNum = OldDataTable.Rows.Count
     End Sub
 End Class
