@@ -249,7 +249,9 @@ Public Class CC_ImageSave
         If mySaveImageUI.AutoUseTimeForFileName = True Then
             Username = Now.Hour.ToString() + "-" + Now.Minute.ToString() + "-" + Now.Second.ToString() + "-" + Now.Millisecond.ToString() + " " + Username
         End If
-        Return (PathDir + Username)
+        Dim returnstr As String = (PathDir + Username)
+        returnstr = returnstr.Replace("\\", "\")
+        Return (returnstr)
     End Function
 
     Private Sub CreatDir(ByVal str As String)
