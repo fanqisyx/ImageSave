@@ -180,13 +180,13 @@ Public Class CC_ImageSave
         Try
 
             If UseCognex Then
-                If mySaveImageUI.ImageFormatJPG = True And IsDiskSpaceEnough(GetAllPath(ReelNumber, Name, "jpg")) Then
-                    AddImageQueue(GetAllPath(ReelNumber, Name, "jpg"), Image)
-                    svpth = GetAllPath(ReelNumber, Name, "jpg")
+                If mySaveImageUI.ImageFormatJPG = True And IsDiskSpaceEnough(GetAllPath(Name, "jpg")) Then
+                    AddImageQueue(GetAllPath(Name, "jpg"), Image)
+                    svpth = GetAllPath(Name, "jpg")
                 End If
-                If mySaveImageUI.ImageFormatBMP = True And IsDiskSpaceEnough(GetAllPath(ReelNumber, Name, "bmp")) Then
-                    AddImageQueue(GetAllPath(ReelNumber, Name, "bmp"), Image)
-                    svpth = GetAllPath(ReelNumber, Name, "bmp")
+                If mySaveImageUI.ImageFormatBMP = True And IsDiskSpaceEnough(GetAllPath(Name, "bmp")) Then
+                    AddImageQueue(GetAllPath(Name, "bmp"), Image)
+                    svpth = GetAllPath(Name, "bmp")
                 End If
             Else
                 Dim a As Bitmap = Image.ToBitmap.Clone()
@@ -194,22 +194,22 @@ Public Class CC_ImageSave
                 Dim b As Bitmap = a.Clone(New Rectangle(0, 0, a.Width, a.Height), Imaging.PixelFormat.Format8bppIndexed)
                 'Dim c As Bitmap = a.Clone(New Rectangle(0, 0, a.Width, a.Height), Imaging.PixelFormat.Format16bppGrayScale)
                 'Dim d As Bitmap = c.Clone(New Rectangle(0, 0, a.Width, a.Height), Imaging.PixelFormat.Format8bppIndexed)
-                If mySaveImageUI.ImageFormatJPG = True And IsDiskSpaceEnough(GetAllPath(ReelNumber, Name, "jpg")) Then
-                    AddImageQueue(GetAllPath(ReelNumber, Name, "jpg"), b)
-                    AddImageQueue(GetAllPath(ReelNumber, Name, "jpg"), a)
-                    svpth = GetAllPath(ReelNumber, Name, "jpg")
+                If mySaveImageUI.ImageFormatJPG = True And IsDiskSpaceEnough(GetAllPath(Name, "jpg")) Then
+                    AddImageQueue(GetAllPath(Name, "jpg"), b)
+                    AddImageQueue(GetAllPath(Name, "jpg"), a)
+                    svpth = GetAllPath(Name, "jpg")
                     'AddImageQueue(GetAllPath(Name, "jpg"), c)
                     'AddImageQueue(GetAllPath(Name, "jpg"), d)
                 End If
-                If mySaveImageUI.ImageFormatBMP = True And IsDiskSpaceEnough(GetAllPath(ReelNumber, Name, "bmp")) Then
-                    AddImageQueue(GetAllPath(ReelNumber, Name, "bmp"), b)
-                    AddImageQueue(GetAllPath(ReelNumber, Name, "bmp"), a)
-                    svpth = GetAllPath(ReelNumber, Name, "bmp")
+                If mySaveImageUI.ImageFormatBMP = True And IsDiskSpaceEnough(GetAllPath(Name, "bmp")) Then
+                    AddImageQueue(GetAllPath(Name, "bmp"), b)
+                    AddImageQueue(GetAllPath(Name, "bmp"), a)
+                    svpth = GetAllPath(Name, "bmp")
                     'AddImageQueue(GetAllPath(Name, "bmp"), c)
                     'AddImageQueue(GetAllPath(Name, "bmp"), d)
                 End If
             End If
-            If IsDiskSpaceEnough(GetAllPath(ReelNumber, Name, "bmp")) = False Then
+            If IsDiskSpaceEnough(GetAllPath(Name, "bmp")) = False Then
                 Return "Err！磁盘空间不足，未保存图像 Image save Error,Disk free space is not enough"
             End If
 
@@ -220,26 +220,26 @@ Public Class CC_ImageSave
         Return svpth
     End Function
 
-    'Public Overloads Function SaveImage(ByVal Image As System.Drawing.Image, Optional ByVal Name As String = " ") As String
-    '    'Dim CogImage As New CogImage24PlanarColor(Image)
-    '    ' Dim LishiImagefile As New CogImageFileTool
-    '    Dim svpth As String = ""
-    '    If mySaveImageUI.ImageFormatJPG = True And IsDiskSpaceEnough(GetAllPath(Name, "jpg")) Then
-    '        AddImageQueue(GetAllPath(Name, "jpg"), Image)
-    '        svpth = GetAllPath(Name, "jpg")
-    '    End If
-    '    If mySaveImageUI.ImageFormatBMP = True And IsDiskSpaceEnough(GetAllPath(Name, "bmp")) Then
-    '        AddImageQueue(GetAllPath(Name, "bmp"), Image)
-    '        svpth = GetAllPath(Name, "bmp")
-    '    End If
-    '    If IsDiskSpaceEnough(GetAllPath(Name, "bmp")) = False Then
-    '        Return "Err！磁盘空间不足，未保存图像 Image save Error,Disk free space is not enough"
-    '    End If
-    '    Return svpth
-    'End Function
+    Public Overloads Function SaveImage(ByVal Image As System.Drawing.Image, Optional ByVal Name As String = " ") As String
+        'Dim CogImage As New CogImage24PlanarColor(Image)
+        ' Dim LishiImagefile As New CogImageFileTool
+        Dim svpth As String = ""
+        If mySaveImageUI.ImageFormatJPG = True And IsDiskSpaceEnough(GetAllPath(Name, "jpg")) Then
+            AddImageQueue(GetAllPath(Name, "jpg"), Image)
+            svpth = GetAllPath(Name, "jpg")
+        End If
+        If mySaveImageUI.ImageFormatBMP = True And IsDiskSpaceEnough(GetAllPath(Name, "bmp")) Then
+            AddImageQueue(GetAllPath(Name, "bmp"), Image)
+            svpth = GetAllPath(Name, "bmp")
+        End If
+        If IsDiskSpaceEnough(GetAllPath(Name, "bmp")) = False Then
+            Return "Err！磁盘空间不足，未保存图像 Image save Error,Disk free space is not enough"
+        End If
+        Return svpth
+    End Function
 
-    Private Function GetAllPath(Optional ByVal ReelNumber As String = " ", Optional ByVal Name As String = " ", Optional ByVal Format As String = "") As String
-        Dim PathDir As String = mySaveImageUI.ImageSavePathEdit + "\" + "图片及数据" + "\" + ReelNumber + "\" + ReelNumber + "\"
+    Private Function GetAllPath(Optional ByVal Name As String = " ", Optional ByVal Format As String = "") As String
+        Dim PathDir As String = mySaveImageUI.ImageSavePathEdit + "\"
         Dim Username As String
         If mySaveImageUI.AutoCreatDateFolder = True Then
             PathDir += Now.Year.ToString() + "-" + Now.Month.ToString() + "-" + Now.Day.ToString() + "\"

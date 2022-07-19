@@ -49,11 +49,11 @@ Public Class CC_ImageSaveUI
     Private Sub CC_ImageSaveUI_Load(sender As Object, e As EventArgs) Handles Me.Load
         IsBeUsed = True
         CK_AutoCreateDatePath.Checked = False
-        CK_AutoCreateDatePath.Visible = False
+        CK_AutoCreateDatePath.Visible = True
         CK_AutoCreateTimeImageName.Checked = False
-        CK_AutoCreateTimeImageName.Visible = False
+        CK_AutoCreateTimeImageName.Visible = True
         CK_UseMicroSoftWay.Checked = False
-        CK_UseMicroSoftWay.Visible = False
+        CK_UseMicroSoftWay.Visible = True
 
         GetIniParameter()
         GetDelImageIniParameter()
