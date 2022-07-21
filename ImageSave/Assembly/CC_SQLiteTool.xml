@@ -1,0 +1,92 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CC_SQLiteTool
+</name>
+</assembly>
+<members>
+<member name="T:Chuangchi.My.Resources.Resources">
+<summary>
+  一个强类型的资源类，用于查找本地化的字符串等。
+</summary>
+</member>
+<member name="P:Chuangchi.My.Resources.Resources.ResourceManager">
+<summary>
+  返回此类使用的缓存的 ResourceManager 实例。
+</summary>
+</member>
+<member name="P:Chuangchi.My.Resources.Resources.Culture">
+<summary>
+  重写当前线程的 CurrentUICulture 属性，对
+  使用此强类型资源类的所有资源查找执行重写。
+</summary>
+</member>
+<member name="M:Chuangchi.CC_SQLiteTool.CreatDB(System.String)">
+ <summary>
+ 建立数据库文件
+ </summary>
+ <param name="DBpath">数据库文件路径，通常以".db"结尾</param>
+ <returns></returns>
+</member>
+<member name="M:Chuangchi.CC_SQLiteTool.CreatTable(System.String,System.String,System.String)">
+ <summary>
+ 创建数据库中的表
+ 创建表中的列的字符串规则相对比较繁琐，具体规则如下：
+ 1、每一列分为“列名”和“数据类型”，列名和数据类型中间用空格隔开；
+ 2、列和列之间使用“,”（英文逗号）分隔，逻辑上N列应该有N-1个逗号
+ 3、列名可以是中文；
+ 4、类型共有：“NULL”、“INTEGER”、“REAL”、“TEXT”、“BLOB”，这是总的类型；
+ 5、Null：此为空类型，无扩展
+ 6、INTEGER：此为整型，通常可以扩展为：INT/INTEGER/TINYINT/SMALLINT/BIGINT/UNSIGED BIG INT/INT2/INT8
+ 7、TEXT：此为字符串，通常可扩展为：CHAR(10)/CHARACTER(20)/VARCHAR(255)/VARYING CHARACTER(255)/NCHAR(25)/TEXT/CLOB/NVARCHAR(100)
+ 8、REAL：此为浮点型，通常可扩展为：REAL/DOUBLE/FLOAT/DOUBLE PRECISION
+ 9、NUMERIC：此可能为BLOB块，通常扩展为：NUMERIC/DECIMAL(10.5)/BOOLEAN/DATE/DATETIME
+ </summary>
+ <param name="DBpath">数据库文件路径</param>
+ <param name="TableName">需要创建的表的表名</param>
+ <param name="columnString">创建所有的列的字符串，此规则比较繁琐，请仔细确认</param>
+ <returns></returns>
+</member>
+<member name="M:Chuangchi.CC_SQLiteTool.InsertRow(System.String,System.Collections.Generic.List{System.String})">
+ <summary>
+ 在数据库中增加一行
+ </summary>
+ <param name="TableName">表名</param>
+ <param name="Values">增加的数据内容，以字符串列表传入</param>
+ <returns></returns>
+</member>
+<member name="M:Chuangchi.CC_SQLiteTool.DeleteFirstFewLines(System.String,System.Int32)">
+ <summary>
+ 删除表中的前几行
+ </summary>
+ <param name="TableName">表命</param>
+ <param name="LineNum">行数</param>
+ <returns></returns>
+</member>
+<member name="M:Chuangchi.CC_SQLiteTool.GetFirstFewLines(System.String,System.Int32)">
+ <summary>
+ 获取表中前几行
+ </summary>
+ <param name="TableName">表命</param>
+ <param name="LineNum">行数</param>
+ <returns></returns>
+</member>
+<member name="M:Chuangchi.Simple_SQLiteCommand.GetFirstFewLines(System.String,System.Int32)">
+ <summary>
+ 获取表中前几行
+ </summary>
+ <param name="TableName">表命</param>
+ <param name="LineNum">行数</param>
+ <returns></returns>
+</member>
+<member name="M:Chuangchi.Simple_SQLiteCommand.DeleteFirstFewLines(System.String,System.Int32)">
+ <summary>
+ 删除表中的前几行
+ </summary>
+ <param name="TableName">表命</param>
+ <param name="LineNum">行数</param>
+ <returns></returns>
+</member>
+</members>
+</doc>
