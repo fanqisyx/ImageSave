@@ -247,6 +247,31 @@ Public Class CC_ImageSave
         End If
         CreatDir(PathDir)
         Username = Name + "." + Format
+
+        '增加可以生成子文件夹功能 fanqi2022-07-30 start********************
+        While Username.Contains("\\") '去除双斜杠
+            Username = Username.Replace("\\", "\")
+        End While
+        While Username.Contains("  ") '去除双空格，以防止后面有文件夹以空格为文件夹名
+            Username = Username.Replace("  ", " ")
+        End While
+
+        If Username.Contains("\") = True Then
+            Dim paths() As String = Username.Split("\")
+            For Each pathstr In paths
+                If pathstr = "" Or pathstr = " " Then
+                    Continue For
+                End If
+                If pathstr.Contains("." + Format) Then
+                    Username = pathstr
+                    Exit For
+                End If
+                PathDir = PathDir + pathstr + "\"
+                CreatDir(PathDir)
+            Next
+        End If
+        '增加可以生成子文件夹功能 fanqi2022-07-30 end********************
+
         If mySaveImageUI.AutoUseTimeForFileName = True Then
             Username = Now.Hour.ToString() + "-" + Now.Minute.ToString() + "-" + Now.Second.ToString() + "-" + Now.Millisecond.ToString() + " " + Username
         End If
