@@ -105,6 +105,7 @@ Public Class CC_ImageSave
         Set(ByVal value As ChuangChi.CC_ImageSaveUI)
             mySaveImageUI = value
             myImageManager.SaveImageUI = value
+            myImageManager.CheckNeedAndDelImage()
         End Set
     End Property
 
