@@ -1,4 +1,7 @@
-﻿0.9.2.1
+﻿2023-05-12
+gitee:gitee_CCDQ:https://gitee.com/in_the_world_37/image-saving-module.git
+
+0.9.2.1
 0.9.2.2
 1、增加对保存图片的目标磁盘剩余空间判断，默认设置为500MB剩余后警报。
 
